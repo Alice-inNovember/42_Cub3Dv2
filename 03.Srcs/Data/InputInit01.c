@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gnl.h                                              :+:      :+:    :+:   */
+/*   InputInit01.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junlee2 <junlee2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/28 09:58:22 by junlee2           #+#    #+#             */
-/*   Updated: 2023/04/17 17:20:28 by junlee2          ###   ########seoul.kr  */
+/*   Created: 2023/04/17 18:52:39 by junlee2           #+#    #+#             */
+/*   Updated: 2023/04/17 18:53:50 by junlee2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GNL_H
-# define GNL_H
 
-char	*get_next_line(int fd);
+#include "../../02.Incs/data.h"
+#include "../../02.Incs/util.h"
+#include "../../02.Incs/libft.h"
 
-#endif
+void	input_init(void)
+{
+	t_input	*input;
+
+	input = get_data()->input;
+}
