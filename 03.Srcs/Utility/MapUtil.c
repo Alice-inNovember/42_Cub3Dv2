@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   LibxInit.c                                         :+:      :+:    :+:   */
+/*   MapUtil.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junlee2 <junlee2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 18:12:43 by junlee2           #+#    #+#             */
-/*   Updated: 2023/04/21 16:24:55 by junlee2          ###   ########seoul.kr  */
+/*   Created: 2023/04/21 16:25:15 by junlee2           #+#    #+#             */
+/*   Updated: 2023/04/23 16:37:47 by junlee2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,31 @@
 #include "../../02.Incs/util.h"
 #include "../../02.Incs/libft.h"
 
-void	libx_init(void)
+void	get_player_data(double *x, double *y, char *face)
 {
-	t_libx	*libx;
+	t_map	*map;
+	int		i;
+	int		j;
 
-	libx = get_data()->libx;
-	libx->mlx = mlx_init();
-	libx->title = ft_strdup("Cube 3D");
-	libx->win = mlx_new_window(libx->mlx, WIDTH, HIGHT, libx->title);
+	map = get_data()->map;
+	i = 0;
+	while (map->map[i])
+	{
+		j = 0;
+		while (map->map[i][j])
+		{
+			if (\
+			map->map[i][j] == 'N' || \
+			map->map[i][j] == 'S' || \
+			map->map[i][j] == 'E' || \
+			map->map[i][j] == 'W')
+			{
+				*x = (double)j;
+				*y = (double)i;
+				*face = map->map[i][j];
+			}
+			j++;
+		}
+		i++;
+	}
 }

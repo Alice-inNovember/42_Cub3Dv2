@@ -6,15 +6,26 @@
 /*   By: junlee2 <junlee2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/17 17:29:42 by junlee2           #+#    #+#             */
-/*   Updated: 2023/04/17 17:33:30 by junlee2          ###   ########seoul.kr  */
+/*   Updated: 2023/04/24 13:18:55 by junlee2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "../../02.Incs/libft.h"
+#include "../../02.Incs/data.h"
+
+int	arr_len(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while(arr[i])
+		i++;
+	return (i);
+}
 
 void	err_exit(char *str)
 {

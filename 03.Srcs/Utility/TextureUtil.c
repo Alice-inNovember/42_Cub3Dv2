@@ -1,48 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   DataInit.c                                         :+:      :+:    :+:   */
+/*   TextureUtil.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junlee2 <junlee2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 17:24:20 by junlee2           #+#    #+#             */
-/*   Updated: 2023/04/23 16:52:23 by junlee2          ###   ########seoul.kr  */
+/*   Created: 2023/04/24 12:40:36 by junlee2           #+#    #+#             */
+/*   Updated: 2023/04/24 13:05:11 by junlee2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../02.Incs/data.h"
 #include "../../02.Incs/util.h"
 #include "../../02.Incs/libft.h"
-#include <stdio.h>
+#include "../../02.Incs/mlx.h"
 
-t_data	*get_data(void)
-{
-	static t_data	*data = 0;
-
-	if (data == 0)
-		data = ft_scalloc(1, sizeof(t_data));
-	return (data);
-}
-
-void	data_malloc(void)
+void	*wall_import(char *path)
 {
 	t_data	*data;
+	void	*img;
+	int		w;
+	int		h;
 
 	data = get_data();
-	data->input = ft_scalloc(1, sizeof(t_input));
-	data->libx = ft_scalloc(1, sizeof(t_libx));
-	data->map = ft_scalloc(1, sizeof(t_map));
-	data->player = ft_scalloc(1, sizeof(t_player));
-	data->texture = ft_scalloc(1, sizeof(t_texture));
+	img = mlx_xpm_file_to_image(data->libx->mlx, path, &w, &h);
+	if (w != 64 || h != 64)
+		err_exit("Error\nImg file size must be 64 * 64 !");
+	return (img);
 }
 
-void	data_init(int argc, char **argv)
+void	get_texture_data(t_image	*img)
 {
-	(void)argc;
-	(void)argv;
-	data_malloc();
-	libx_init();
-	input_init();
-	map_init();
-	player_init();
+	img->addr = mlx_get_data_addr(\
+	img->img, \
+	&img->bits_per_pixel, \
+	&img->line_length, \
+	&img->endian);
 }

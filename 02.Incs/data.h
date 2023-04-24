@@ -6,7 +6,7 @@
 /*   By: junlee2 <junlee2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:28:43 by junlee2           #+#    #+#             */
-/*   Updated: 2023/04/17 18:51:54 by junlee2          ###   ########seoul.kr  */
+/*   Updated: 2023/04/23 16:34:02 by junlee2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,14 @@ typedef struct s_data
 	t_image		*screen;
 }	t_data;
 
+//Data
 t_data	*get_data(void);
+
+//Data Init
+void	data_init(int argc, char **argv);
 void	libx_init(void);
+void	input_init(void);
+void	map_init(void);
+void	player_init(void);
 
 #endif

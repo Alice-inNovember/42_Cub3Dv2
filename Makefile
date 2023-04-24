@@ -13,17 +13,26 @@ D_INCS		=	02.incs
 D_SRCS		=	03.srcs
 D_OBJS		=	04.Objs
 
-SD_DATA		=	$(D_SRCS)/gameplay
-SD_PLAYER	=	$(D_SRCS)/initial
-SD_RANDER	=	$(D_SRCS)/minimap
-SD_UTILITY	=	$(D_SRCS)/utility
+SD_DATA		=	$(D_SRCS)/Data
+SD_PLAYER	=	$(D_SRCS)/Player
+SD_RENDER	=	$(D_SRCS)/Render
+SD_UTILITY	=	$(D_SRCS)/Utility
 
-OD_DATA		=	$(D_OBJS)/gameplay
-OD_PLAYER	=	$(D_OBJS)/initial
-OD_RANDER	=	$(D_OBJS)/minimap
-OD_UTILITY	=	$(D_OBJS)/utility
+OD_DATA		=	$(D_OBJS)/Data
+OD_PLAYER	=	$(D_OBJS)/Player
+OD_RENDER	=	$(D_OBJS)/Render
+OD_UTILITY	=	$(D_OBJS)/Utility
 #FILES-------------------------------------------------
-SRCS		=	$(D_SRCS)/main.c
+SRCS		=	$(D_SRCS)/main.c\
+				$(SD_DATA)/DataInit.c\
+				$(SD_DATA)/InputInit01.c\
+				$(SD_DATA)/InputInit02.c\
+				$(SD_DATA)/LibxInit.c\
+				$(SD_DATA)/MapInit.c\
+				$(SD_DATA)/PlayerInit.c\
+				$(SD_UTILITY)/Util01.c\
+				$(SD_UTILITY)/MapUtil.c\
+				$(SD_UTILITY)/DebugPrint.c
 OBJS		=	$(subst $(D_SRCS), $(D_OBJS), $(SRCS:.c=.o))
 LIBGNL		=	$(D_LIBS)/GNL/LIBGNL.a
 LIB42		=	$(D_LIBS)/LIB42/lib42.a
@@ -51,12 +60,14 @@ mlx :
 $(NAME) : $(OBJS)
 	$(call P_STAT,$(C_BLE)Compiling)
 
-	@$(MAKE) -C $(D_LIBS)/GNL
+	@$(MAKE) -C $(D_LIBS)/LIB42 --silent
+	$(call P_STAT,$(C_CYN)lib42.a"      "✅)
+	@$(MAKE) -C $(D_LIBS)/GNL --silent
 	$(call P_STAT,$(C_CYN)libgnl.a"     "✅)
-	@$(MAKE) -C $(D_LIBS)/MLX
+	@$(MAKE) -C $(D_LIBS)/MLX --silent
 	$(call P_STAT,$(C_CYN)mlx.dylib"    "✅)
 
-	@$(CC) $(CFLAGS) -o $@ $^ $(LIBGNL) $(MLXFLAGS) -L$(D_LIBS)/MLX -lmlx
+	@$(CC) $(CFLAGS) -o $@ $^ $(LIBGNL) $(LIB42) $(MLXFLAGS) -L$(D_LIBS)/MLX -lmlx
 	@-install_name_tool -change libmlx.dylib ./$(LIBMLX) $(NAME)
 	$(call P_STAT,$(C_PLE)cub3D"        "✅)
 
@@ -65,12 +76,12 @@ $(NAME) : $(OBJS)
 	$(call P_STAT,$(C_BLE)MLX processing...)
 #OBJS--------------------------------------------------
 $(D_OBJS)/%.o : $(D_SRCS)/%.c | $(D_OBJS)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ 
 $(OD_DATA)/%.o : $(SD_DATA)/%.c | $(OD_DATA)
 	@$(CC) $(CFLAGS) -c $< -o $@
 $(OD_PLAYER)/%.o : $(SD_PLAYER)/%.c | $(OD_PLAYER)
 	@$(CC) $(CFLAGS) -c $< -o $@
-$(OD_RANDER)/%.o : $(SD_RANDER)/%.c | $(OD_RANDER)
+$(OD_RENDER)/%.o : $(SD_RENDER)/%.c | $(OD_RENDER)
 	@$(CC) $(CFLAGS) -c $< -o $@
 $(OD_UTILITY)/%.o : $(SD_UTILITY)/%.c | $(OD_UTILITY)
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -87,8 +98,8 @@ $(D_OBJS):
 	@mkdir -p $(OD_PLAYER)
 	$(call P_STAT,$(C_CYN)OD_PLAYER"    "✅)
 
-	@mkdir -p $(OD_RANDER)
-	$(call P_STAT,$(C_CYN)OD_RANDER"    "✅)
+	@mkdir -p $(OD_RENDER)
+	$(call P_STAT,$(C_CYN)OD_RENDER"    "✅)
 
 	@mkdir -p $(OD_UTILITY)
 	$(call P_STAT,$(C_CYN)OD_UTILITY"   "✅)
@@ -99,6 +110,9 @@ $(D_OBJS):
 clean :
 	$(call P_STAT,$(C_RED)Cleaning)
 
+	@$(MAKE) -C $(D_LIBS)/lib42 fclean
+	$(call P_STAT,$(C_CYN)lib42"        "✅)
+	
 	@$(MAKE) -C $(D_LIBS)/GNL fclean
 	$(call P_STAT,$(C_CYN)libgnl"       "✅)
 

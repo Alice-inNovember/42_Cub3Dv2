@@ -6,7 +6,7 @@
 #    By: junlee2 <junlee2@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/11 16:22:23 by junlee2           #+#    #+#              #
-#    Updated: 2023/04/15 15:42:06 by junlee2          ###   ########seoul.kr   #
+#    Updated: 2023/04/21 15:41:37 by junlee2          ###   ########seoul.kr   #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,24 +28,17 @@ BOBJS	=	${BSRCS:.c=.o}
 
 all : $(NAME)
 
-ifeq ($(MAKECMDGOALS), bonus)
 $(NAME) : $(OBJS) $(BOBJS)
-	$(LIBC) $(NAME) $(OBJS) $(BOBJS)
-else
-$(NAME) : $(OBJS)
-	$(LIBC) $(NAME) $(OBJS)
-endif
-
-bonus : $(NAME)
+	@$(LIBC) $(NAME) $(OBJS) $(BOBJS)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
-	$(RM) $(OBJS) $(BOBJS)
+	@$(RM) $(OBJS) $(BOBJS)
 
 fclean : clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
 re : fclean all
 

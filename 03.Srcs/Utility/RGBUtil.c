@@ -1,12 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   InputInit02.c                                      :+:      :+:    :+:   */
+/*   RGBUtil.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junlee2 <junlee2@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/17 18:52:38 by junlee2           #+#    #+#             */
-/*   Updated: 2023/04/23 18:46:20 by junlee2          ###   ########seoul.kr  */
+/*   Created: 2023/03/17 14:44:22 by junlee2           #+#    #+#             */
+/*   Updated: 2023/04/24 13:08:53 by junlee2          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../02.incs/data.h"
+
+t_rgb	create_trgb(int t, int r, int g, int b)
+{
+	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+int	get_t(t_rgb trgb)
+{
+	return ((trgb >> 24) & 0xFF);
+}
+
+int	get_r(t_rgb trgb)
+{
+	return ((trgb >> 16) & 0xFF);
+}
+
+int	get_g(t_rgb trgb)
+{
+	return ((trgb >> 8) & 0xFF);
+}
+
+int	get_b(t_rgb trgb)
+{
+	return (trgb & 0xFF);
+}
